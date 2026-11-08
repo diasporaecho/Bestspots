@@ -59,13 +59,13 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
 <body>
 <header>
   <h1>The World <span>Top 50</span> Lists</h1>
-  <p class="sub">638 picks across 11 lists, from the world's top places to African and diaspora festivals. Switch between international and domestic (US) picks on any tab. Ranks are a judgment call. Items marked <span class="badge">Advisory</span> carry a US travel advisory of Level 3 or higher, or need a live check.</p>
+  <p class="sub">1,138 picks: world top 50s, US top 50s and 138 African and diaspora festivals. Use the World / International / Domestic switch on any tab. Ranks are a judgment call. Items marked <span class="badge">Advisory</span> carry a US travel advisory of Level 3 or higher, or need a live check.</p>
 </header>
 
 <div class="bar"><div class="bar-inner">
   <div class="tabs" role="tablist" id="tabs"></div>
   <div class="tools">
-    <div class="seg" role="group" aria-label="Region" id="seg"><button data-r="all" aria-pressed="true">All</button><button data-r="intl" aria-pressed="false">International</button><button data-r="us" aria-pressed="false">Domestic (US)</button></div>
+    <div class="seg" role="group" aria-label="Region" id="seg"><button data-r="all" aria-pressed="true">World</button><button data-r="intl" aria-pressed="false">International</button><button data-r="us" aria-pressed="false">Domestic (US)</button></div>
     <input type="search" id="q" placeholder="Search a city, country or festival" aria-label="Search">
     <label class="chk"><input type="checkbox" id="hideAdv"> Hide advisory picks</label>
   </div>
@@ -105,6 +105,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
 <footer>Last updated November 2026.</footer>
 
 <script src="data.js"></script>
+<script src="data-us.js"></script>
 <script>
 (function(){
   var lists = window.LISTS, tabs = document.getElementById('tabs'), main = document.getElementById('main');
@@ -143,11 +144,18 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
       return '<button class="tab" role="tab" aria-selected="'+(l.id===current && !q.value.trim())+'" data-id="'+l.id+'">'+esc(l.title)+'</button>';
     }).join('');
   }
-  function keep(it){
-    if (hideAdv.checked && it.adv) return false;
-    if (region === 'us') return it.us;
-    if (region === 'intl') return !it.us;
-    return true;
+  lists.forEach(function(l){
+    var u = window.US_LISTS && window.US_LISTS[l.id];
+    if (u) { l.usItems = u.items; l.usLead = u.lead; }
+  });
+  function itemsFor(l){
+    var src = (region === 'us' && l.usItems) ? l.usItems : l.items;
+    return src.map(function(s){ var it = parse(s); if (src === l.usItems) it.us = true; return it; }).filter(function(it){
+      if (hideAdv.checked && it.adv) return false;
+      if (region === 'us') return it.us;
+      if (region === 'intl') return !it.us;
+      return true;
+    });
   }
   var regionWord = {all:'', intl:'international', us:'domestic (US)'};
   function render(){
@@ -156,18 +164,17 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
     var term = q.value.trim().toLowerCase(), html = '';
     if (term){
       var hits = [];
-      lists.forEach(function(l){ var n = 0; l.items.forEach(function(s){
-        var it = parse(s);
-        if (!keep(it)) return;
-        n++;
-        if ((it.name+' '+it.where).toLowerCase().indexOf(term) > -1) hits.push(card(it, n, l.title, l.id));
+      lists.forEach(function(l){ itemsFor(l).forEach(function(it, i){
+        if ((it.name+' '+it.where).toLowerCase().indexOf(term) > -1) hits.push(card(it, i+1, l.title, l.id));
       });});
       html = '<h2>Search results</h2><p class="lead">'+hits.length+' '+(regionWord[region]?regionWord[region]+' ':'')+'match'+(hits.length===1?'':'es')+' for "'+esc(q.value.trim())+'".</p>' + (hits.length ? '<ol>'+hits.join('')+'</ol>' : '<p class="empty">Nothing matches. Try a country or a broader word.</p>');
     } else {
       var l = lists.filter(function(x){return x.id===current})[0];
-      var n = 0, cards = l.items.map(function(s){var it=parse(s); if (!keep(it)) return ''; n++; return card(it,n,null,l.id)}).join('');
-      var count = region === 'all' ? '' : '<p class="count">'+n+' '+regionWord[region]+' pick'+(n===1?'':'s')+'</p>';
-      html = '<h2>'+esc(l.title)+'</h2><p class="lead">'+esc(l.lead)+'</p>'+count+(n ? '<ol>'+cards+'</ol>' : '<p class="empty">No '+regionWord[region]+' picks on this list. Switch to All or try another tab.</p>');
+      var shown = itemsFor(l), n = shown.length;
+      var cards = shown.map(function(it, i){ return card(it, i+1, null, l.id); }).join('');
+      var usList = region === 'us' && l.usItems;
+      var count = region === 'all' ? '' : '<p class="count">'+(usList ? 'US top '+n : n+' '+regionWord[region]+' pick'+(n===1?'':'s'))+'</p>';
+      html = '<h2>'+esc(l.title)+'</h2><p class="lead">'+esc(usList ? l.usLead : l.lead)+'</p>'+count+(n ? '<ol>'+cards+'</ol>' : '<p class="empty">No '+regionWord[region]+' picks on this list. Switch to All or try another tab.</p>');
     }
     main.innerHTML = html;
   }
