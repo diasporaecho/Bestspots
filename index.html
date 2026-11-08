@@ -55,13 +55,13 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
 <body>
 <header>
   <h1>The World <span>Top 50</span> Lists</h1>
-  <p class="sub">500 picks across 10 categories, ranked by fame, uniqueness and payoff for a first-time visitor. Ranks are a judgment call. Items marked <span class="badge">Advisory</span> carry a US travel advisory of Level 3 or higher, or need a live check.</p>
+  <p class="sub">600 picks across 11 lists, from the world's top places to African and diaspora festivals. Ranks are a judgment call. Items marked <span class="badge">Advisory</span> carry a US travel advisory of Level 3 or higher, or need a live check.</p>
 </header>
 
 <div class="bar"><div class="bar-inner">
   <div class="tabs" role="tablist" id="tabs"></div>
   <div class="tools">
-    <input type="search" id="q" placeholder="Search all 500 picks: a city, country or activity" aria-label="Search">
+    <input type="search" id="q" placeholder="Search all 600 picks: a city, country or festival" aria-label="Search">
     <label class="chk"><input type="checkbox" id="hideAdv"> Hide advisory picks</label>
   </div>
 </div></div>
@@ -109,20 +109,23 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
 
   function parse(s){
     var p = s.split('|'), name = p[0], adv = /\[Advisory( check)?\]/.test(name);
-    return {name: name.replace(/\s*\[Advisory( check)?\]/,'').trim(), where: p[1]||'', adv: adv, check: /\[Advisory check\]/.test(name)};
+    return {name: name.replace(/\s*\[Advisory( check)?\]/,'').trim(), where: p[1]||'', url: p[2]||'', adv: adv, check: /\[Advisory check\]/.test(name)};
   }
   function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
   function query(it){
     var where = it.where.split(';')[0].replace(/\.$/,'').trim();
     return encodeURIComponent((it.name + ' ' + where).trim());
   }
-  function card(it, rank, cat){
+  function card(it, rank, cat, listId){
     var b = it.adv ? '<span class="badge">'+(it.check?'Advisory check':'Advisory')+'</span>' : '';
     var q = query(it);
     var photos = 'https://www.google.com/search?tbm=isch&q=' + q;
     var map = 'https://www.google.com/maps/search/?api=1&query=' + q;
-    return '<li><span class="rank">'+rank+'</span><div class="name"><a href="'+photos+'" target="_blank" rel="noopener">'+esc(it.name)+'</a>'+b+'</div><div class="where">'+esc(it.where)+'</div>'+(cat?'<div class="cat-label">'+esc(cat)+'</div>':'')+
-      '<div class="links"><a href="'+photos+'" target="_blank" rel="noopener">Photos</a><a href="'+map+'" target="_blank" rel="noopener">Map</a></div></li>';
+    var site = '';
+    if (it.url) site = '<a href="'+esc(it.url)+'" target="_blank" rel="noopener">Website</a>';
+    else if (listId === 'diaspora' || listId === 'events') site = '<a href="https://www.google.com/search?q='+q+'%20official%20site" target="_blank" rel="noopener">Find site</a>';
+    return '<li><span class="rank">'+rank+'</span><div class="name"><a href="'+photos+'" target="_blank" rel="noopener">'+esc(it.name)+'</a>'+b+'</div><div class="where">'+esc(it.where.replace(/; /g,' · '))+'</div>'+(cat?'<div class="cat-label">'+esc(cat)+'</div>':'')+
+      '<div class="links">'+site+'<a href="'+photos+'" target="_blank" rel="noopener">Photos</a><a href="'+map+'" target="_blank" rel="noopener">Map</a></div></li>';
   }
   function renderTabs(){
     tabs.innerHTML = lists.map(function(l){
@@ -137,12 +140,12 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
       lists.forEach(function(l){ l.items.forEach(function(s,i){
         var it = parse(s);
         if (hide && it.adv) return;
-        if ((it.name+' '+it.where).toLowerCase().indexOf(term) > -1) hits.push(card(it, i+1, l.title));
+        if ((it.name+' '+it.where).toLowerCase().indexOf(term) > -1) hits.push(card(it, i+1, l.title, l.id));
       });});
       html = '<h2>Search results</h2><p class="lead">'+hits.length+' match'+(hits.length===1?'':'es')+' for "'+esc(q.value.trim())+'".</p>' + (hits.length ? '<ol>'+hits.join('')+'</ol>' : '<p class="empty">Nothing matches. Try a country or a broader word.</p>');
     } else {
       var l = lists.filter(function(x){return x.id===current})[0];
-      var cards = l.items.map(function(s,i){var it=parse(s); return (hide&&it.adv)?'':card(it,i+1)}).join('');
+      var cards = l.items.map(function(s,i){var it=parse(s); return (hide&&it.adv)?'':card(it,i+1,null,l.id)}).join('');
       html = '<h2>'+esc(l.title)+'</h2><p class="lead">'+esc(l.lead)+'</p><ol>'+cards+'</ol>';
     }
     main.innerHTML = html;

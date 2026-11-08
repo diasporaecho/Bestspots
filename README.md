@@ -1,8 +1,8 @@
 # The World Top 50 Lists
 
-500 worldwide travel picks across 10 categories: places to visit, things to do, adventures, wellness, events, wonders, adult entertainment, beaches, nature and wildlife, and wow spots.
+600 worldwide travel picks across 11 lists: places to visit, things to do, adventures, wellness, events, wonders, adult entertainment, beaches, nature and wildlife, wow spots, and 100 African & Diaspora Festivals.
 
-The site has a tab for each category, a search box across all 500 picks, and a toggle to hide places with a US travel advisory.
+The site has a tab for each list, a search box across all 600 picks, and a toggle to hide places with a US travel advisory. Every card links to photos and a map. Festival cards also link to the official website, or to a search for it.
 
 ## Publish on GitHub Pages
 
@@ -13,6 +13,6 @@ The site has a tab for each category, a search box across all 500 picks, and a t
 
 ## Edit the lists
 
-All picks live in `data.js`. Each item is one line in the form `"Name|Where or note"`. Add `[Advisory]` to a name to show the advisory badge. Keep 50 items per category so the ranks stay 1 to 50.
+All picks live in `data.js`. Each item is one line in the form `"Name|Where or note"`, with an optional third part for the official website: `"Name|Place; date|https://..."`. Add `[Advisory]` to a name to show the advisory badge.
 
 Safety and date notes were checked as of November 2026. Confirm advisories at travel.state.gov before booking.
