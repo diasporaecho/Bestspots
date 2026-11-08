@@ -1,8 +1,8 @@
 # The World Top 50 Lists
 
-600 worldwide travel picks across 11 lists: places to visit, things to do, adventures, wellness, events, wonders, adult entertainment, beaches, nature and wildlife, wow spots, and 100 African & Diaspora Festivals.
+638 travel picks across 11 lists: places to visit, things to do, adventures, wellness, events, wonders, adult entertainment, beaches, nature and wildlife, wow spots, and 138 African & Diaspora Festivals (50 in the US).
 
-The site has a tab for each list, a search box across all 600 picks, and a toggle to hide places with a US travel advisory. Every card links to photos and a map. Festival cards also link to the official website, or to a search for it.
+The site has a tab for each list, an All / International / Domestic (US) switch that filters every tab, a search box, and a toggle to hide places with a US travel advisory. Domestic picks are detected from US city and state names in each item, and include Puerto Rico and the US Virgin Islands. Every card links to photos and a map. Festival cards also link to the official website, or to a search for it.
 
 ## Publish on GitHub Pages
 
