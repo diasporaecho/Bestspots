@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The World Top 50 Lists</title>
+<meta name="description" content="500 worldwide travel picks across 10 categories: places, things to do, adventures, wellness, events, wonders, adult entertainment, beaches, nature and wow spots.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0d0b;--panel:#17150f;--line:#2b271d;--text:#efe8d8;--muted:#a69d88;--accent:#c9a45c;--warn:#e07a4f;--warn-bg:#3a1f14}
+@media (prefers-color-scheme: light){:root{--bg:#f7f3ea;--panel:#fffdf7;--line:#e4dccb;--text:#1d1a14;--muted:#6d6555;--accent:#9a7426;--warn:#b2471c;--warn-bg:#fbe6db}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Inter,system-ui,sans-serif}
+header{padding:56px 16px 24px;max-width:1080px;margin:0 auto}
+h1{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1.05;margin:0 0 12px;letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+.sub{color:var(--muted);max-width:640px;margin:0}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar-inner{max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:7px 13px;border-radius:999px;font:500 14px Inter,sans-serif;cursor:pointer}
+.tab[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:#16130c}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=search]{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:9px 12px;border-radius:10px;font:15px Inter,sans-serif}
+label.chk{color:var(--muted);font-size:14px;display:flex;gap:6px;align-items:center;cursor:pointer}
+main{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+h2{font-family:Fraunces,Georgia,serif;font-size:1.9rem;margin:8px 0 6px}
+.lead{color:var(--muted);margin:0 0 20px;max-width:720px}
+ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 14px 14px 58px;position:relative;min-height:64px}
+.rank{position:absolute;left:14px;top:12px;font-family:Fraunces,Georgia,serif;font-weight:800;font-size:1.35rem;color:var(--accent);width:34px;text-align:right}
+.name{font-weight:600}
+.where{color:var(--muted);font-size:14px}
+.badge{display:inline-block;margin-left:6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--warn);background:var(--warn-bg);padding:2px 7px;border-radius:999px;vertical-align:2px}
+.empty{color:var(--muted)}
+.cat-label{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+section.notes{max-width:1080px;margin:0 auto;padding:0 16px 64px}
+.notes-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.notes-box h3{font-family:Fraunces,Georgia,serif;margin:0 0 10px;font-size:1.4rem}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0 16px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500}
+.notes-box ul{padding-left:18px;margin:0 0 12px}
+.notes-box a{color:var(--accent)}
+footer{color:var(--muted);font-size:13px;text-align:center;padding:0 16px 40px}
+</style>
+</head>
+<body>
+<header>
+  <h1>The World <span>Top 50</span> Lists</h1>
+  <p class="sub">500 picks across 10 categories, ranked by fame, uniqueness and payoff for a first-time visitor. Ranks are a judgment call. Items marked <span class="badge">Advisory</span> carry a US travel advisory of Level 3 or higher, or need a live check.</p>
+</header>
+
+<div class="bar"><div class="bar-inner">
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="tools">
+    <input type="search" id="q" placeholder="Search all 500 picks: a city, country or activity" aria-label="Search">
+    <label class="chk"><input type="checkbox" id="hideAdv"> Hide advisory picks</label>
+  </div>
+</div></div>
+
+<main id="main"></main>
+
+<section class="notes"><div class="notes-box">
+  <h3>Check before booking</h3>
+  <p class="lead" style="margin-bottom:8px">Safety and time-sensitive details were checked as of November 2026. Confirm hours, prices, age rules and opening status for everything else.</p>
+  <table>
+    <tr><th>Place</th><th>US level</th><th>Note</th></tr>
+    <tr><td>Uganda, DR Congo</td><td>Level 4</td><td>Left off the lists.</td></tr>
+    <tr><td>Rwanda</td><td>Conflicting</td><td>Official page shows Level 3 (June 2026); an October report says Level 2. Confirm before buying gorilla permits.</td></tr>
+    <tr><td>Jordan</td><td>Level 3</td><td>Issued August 29, 2026.</td></tr>
+    <tr><td>Tanzania, Trinidad and Tobago, UAE, Colombia</td><td>Level 3</td><td>From early-2026 reports; confirm the current level.</td></tr>
+    <tr><td>Egypt</td><td>Level 2</td><td>Sinai and Western Desert border zones are do-not-travel; Cairo, Luxor and Aswan are not.</td></tr>
+    <tr><td>Jamaica, Mozambique</td><td>Not checked</td><td>Confirm before booking.</td></tr>
+  </table>
+  <ul>
+    <li><b>Machu Picchu:</b> no unpaid holds since September 2026; Inca Trail permits no longer include entry.</li>
+    <li><b>Gorilla permits:</b> Rwanda charges $1,500; book the permit before flights.</li>
+    <li><b>Grand Egyptian Museum:</b> online booking only; prices rose November 1, 2026.</li>
+    <li><b>Bhutan:</b> the $100 nightly fee ends for trips starting after August 31, 2027.</li>
+    <li><b>Indonesia:</b> sex outside marriage is illegal since January 2026, including for visitors; enforcement is complaint-based.</li>
+    <li><b>Amsterdam:</b> no photos of workers or windows; early De Wallen closing times.</li>
+    <li><b>Carnival clash:</b> Rio, Mindelo, Mardi Gras and Trinidad all peak around February 9, 2027.</li>
+  </ul>
+  <p style="font-size:14px;color:var(--muted);margin:0">Sources:
+    <a href="https://travel.state.gov/en/international-travel/travel-advisories.html">State Department advisories</a> ·
+    <a href="https://www.squaremouth.com/travel-advice/travel-advisory-guide-level-4-countries-for-u-s-citizens">Squaremouth Level 4 table</a> ·
+    <a href="https://www.timeout.com/news/it-just-became-a-whole-lot-easier-to-visit-machu-picchu-heres-why-102126">Time Out on Machu Picchu</a> ·
+    <a href="https://www.dumaexplorer.com/blog/gorilla-trekking-faqs-permits-costs-rules">Duma Explorer gorilla guide</a> ·
+    <a href="https://tripprof.com/en/blog/2027-travel-events-calendar/">TripProf 2027 events calendar</a></p>
+</div></section>
+
+<footer>Last updated November 2026.</footer>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var lists = window.LISTS, tabs = document.getElementById('tabs'), main = document.getElementById('main');
+  var q = document.getElementById('q'), hideAdv = document.getElementById('hideAdv');
+  var current = (location.hash || '').slice(1) || lists[0].id;
+  if (!lists.some(function(l){return l.id===current})) current = lists[0].id;
+
+  function parse(s){
+    var p = s.split('|'), name = p[0], adv = /\[Advisory( check)?\]/.test(name);
+    return {name: name.replace(/\s*\[Advisory( check)?\]/,'').trim(), where: p[1]||'', adv: adv, check: /\[Advisory check\]/.test(name)};
+  }
+  function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+  function card(it, rank, cat){
+    var b = it.adv ? '<span class="badge">'+(it.check?'Advisory check':'Advisory')+'</span>' : '';
+    return '<li><span class="rank">'+rank+'</span><div class="name">'+esc(it.name)+b+'</div><div class="where">'+esc(it.where)+'</div>'+(cat?'<div class="cat-label">'+esc(cat)+'</div>':'')+'</li>';
+  }
+  function renderTabs(){
+    tabs.innerHTML = lists.map(function(l){
+      return '<button class="tab" role="tab" aria-selected="'+(l.id===current && !q.value.trim())+'" data-id="'+l.id+'">'+esc(l.title)+'</button>';
+    }).join('');
+  }
+  function render(){
+    renderTabs();
+    var term = q.value.trim().toLowerCase(), hide = hideAdv.checked, html = '';
+    if (term){
+      var hits = [];
+      lists.forEach(function(l){ l.items.forEach(function(s,i){
+        var it = parse(s);
+        if (hide && it.adv) return;
+        if ((it.name+' '+it.where).toLowerCase().indexOf(term) > -1) hits.push(card(it, i+1, l.title));
+      });});
+      html = '<h2>Search results</h2><p class="lead">'+hits.length+' match'+(hits.length===1?'':'es')+' for "'+esc(q.value.trim())+'".</p>' + (hits.length ? '<ol>'+hits.join('')+'</ol>' : '<p class="empty">Nothing matches. Try a country or a broader word.</p>');
+    } else {
+      var l = lists.filter(function(x){return x.id===current})[0];
+      var cards = l.items.map(function(s,i){var it=parse(s); return (hide&&it.adv)?'':card(it,i+1)}).join('');
+      html = '<h2>'+esc(l.title)+'</h2><p class="lead">'+esc(l.lead)+'</p><ol>'+cards+'</ol>';
+    }
+    main.innerHTML = html;
+  }
+  tabs.addEventListener('click', function(e){
+    var b = e.target.closest('.tab'); if (!b) return;
+    current = b.getAttribute('data-id'); q.value = '';
+    history.replaceState(null,'','#'+current); render(); window.scrollTo({top: main.offsetTop - 120, behavior:'smooth'});
+  });
+  q.addEventListener('input', render);
+  hideAdv.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>
